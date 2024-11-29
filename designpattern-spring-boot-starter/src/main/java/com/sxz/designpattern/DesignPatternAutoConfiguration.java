@@ -1,5 +1,10 @@
 package com.sxz.designpattern;
 
+import com.sxz.designpattern.chain.context.ChainOfResponsibilityContext;
+import com.sxz.designpattern.chain.context.Impl.ConcreteChainOfResponsibilityContext;
+import com.sxz.designpattern.strategy.context.StrategyContext;
+import com.sxz.designpattern.strategy.context.impl.ConcreteStrategyContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -9,7 +14,14 @@ import org.springframework.context.annotation.Configuration;
  **/
 @Configuration
 public class DesignPatternAutoConfiguration {
-    public void test(){
-        System.out.println("自动装配测试成功！");
+
+    @Bean
+    public ChainOfResponsibilityContext<?> chainOfResponsibilityContext() {
+        return new ConcreteChainOfResponsibilityContext<>();
+    }
+
+    @Bean
+    public StrategyContext<?, ?> strategyContext() {
+        return new ConcreteStrategyContext<>();
     }
 }

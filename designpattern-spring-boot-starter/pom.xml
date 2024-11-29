@@ -24,5 +24,10 @@
             <artifactId>spring-boot-starter</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>com.sxz.designpattern</groupId>
+            <artifactId>designpattern</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>
