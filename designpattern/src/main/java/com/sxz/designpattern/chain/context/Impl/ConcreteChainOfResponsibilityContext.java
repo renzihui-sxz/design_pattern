@@ -24,9 +24,9 @@ public class ConcreteChainOfResponsibilityContext<T> implements ChainOfResponsib
 
     private static final Map<String, ConcreteChainOfResponsibilityExecutor<?>> CONTEXT = new ConcurrentHashMap<>();
 
-    static {
+    public ConcreteChainOfResponsibilityContext(String packageName) {
         try {
-            ChainOfResponsibilityRegister.initChainOfResponsibilityHandler();
+            ChainOfResponsibilityRegister.initChainOfResponsibilityHandler(packageName);
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

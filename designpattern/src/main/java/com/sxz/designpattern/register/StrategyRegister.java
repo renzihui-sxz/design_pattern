@@ -19,13 +19,13 @@ import java.util.Set;
  */
 public class StrategyRegister {
 
-    public static void initStrategyHandler() throws IOException, ClassNotFoundException {
-        List<Class<?>> classes = ReflectUtil.getClassByAnnotation(Strategy.class);
+    public static void initStrategyHandler(String packageName) throws IOException, ClassNotFoundException {
+        List<Class<?>> classes = ReflectUtil.getClassByAnnotation(Strategy.class, packageName);
         for (Class<?> aClass : classes) {
             String id = getStrategyId(aClass);
             ClassContext.put(PatternEnum.STRATEGY, id, aClass);
         }
-        List<MethodObj> methods = ReflectUtil.getMethodByAnnotation(Strategy.class);
+        List<MethodObj> methods = ReflectUtil.getMethodByAnnotation(Strategy.class, packageName);
         for (MethodObj method : methods) {
             String id = getStrategyId(method.getMethod());
             MethodContext.put(PatternEnum.STRATEGY, id, method);

@@ -29,9 +29,12 @@ public class ReflectUtil {
 
     private static final String FILE_INDEX = "file";
 
-    public static List<Class<?>> getClassByAnnotation(Class<? extends Annotation> annotationClass) throws IOException, ClassNotFoundException {
-        Package[] packages = Package.getPackages();
+    public static List<Class<?>> getClassByAnnotation(Class<? extends Annotation> annotationClass, String packageName) throws IOException, ClassNotFoundException {
+        if (Objects.nonNull(packageName) && !packageName.isEmpty()) {
+            return getClassFromPackage(annotationClass, packageName);
+        }
         List<Class<?>> classesResp = new ArrayList<>();
+        Package[] packages = Package.getPackages();
         for (Package pkg : packages) {
             Class<?>[] classes = getClassesInPackage(pkg.getName());
             for (Class<?> clazz : classes) {
@@ -43,9 +46,36 @@ public class ReflectUtil {
         return classesResp;
     }
 
-    public static List<MethodObj> getMethodByAnnotation(Class<? extends Annotation> annotationClass) throws IOException, ClassNotFoundException {
-        Package[] packages = Package.getPackages();
+    private static List<Class<?>> getClassFromPackage(Class<? extends Annotation> annotationClass, String packageName) throws IOException, ClassNotFoundException {
+        List<Class<?>> classesResp = new ArrayList<>();
+        Class<?>[] classes = getClassesInPackage(packageName);
+        for (Class<?> clazz : classes) {
+            if (clazz.isAnnotationPresent(annotationClass)) {
+                classesResp.add(clazz);
+            }
+        }
+        return classesResp;
+    }
+
+    private static List<MethodObj> getMethodObjFromPackage(Class<? extends Annotation> annotationClass, String packageName) throws IOException, ClassNotFoundException {
         List<MethodObj> methodResp = new ArrayList<>();
+        Class<?>[] classes = getClassesInPackage(packageName);
+        for (Class<?> clazz : classes) {
+            for (Method method : clazz.getDeclaredMethods()) {
+                if (method.isAnnotationPresent(annotationClass)) {
+                    methodResp.add(MethodObj.getInstance(method, clazz));
+                }
+            }
+        }
+        return methodResp;
+    }
+
+    public static List<MethodObj> getMethodByAnnotation(Class<? extends Annotation> annotationClass, String packageName) throws IOException, ClassNotFoundException {
+        if (Objects.nonNull(packageName) && !packageName.isEmpty()) {
+            return getMethodObjFromPackage(annotationClass, packageName);
+        }
+        List<MethodObj> methodResp = new ArrayList<>();
+        Package[] packages = Package.getPackages();
         for (Package pkg : packages) {
             Class<?>[] classes = getClassesInPackage(pkg.getName());
             for (Class<?> clazz : classes) {
