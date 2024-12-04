@@ -7,6 +7,8 @@ public enum PatternEnum {
 
     STRATEGY("STRATEGY"),
 
+    STATE("STATE"),
+
     CHAIN_OF_RESPONSIBILITY("CHAIN_OF_RESPONSIBILITY");
 
     private String model;

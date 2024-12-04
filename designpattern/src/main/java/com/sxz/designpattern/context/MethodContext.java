@@ -42,6 +42,10 @@ public class MethodContext {
         return Objects.isNull(classMap) ? null : classMap.get(id);
     }
 
+    public static Map<Object, Collection<MethodObj>> mapOfCollection(PatternEnum patternEnum) {
+        return BATCH_CONTEXT.get(patternEnum.getModel());
+    }
+
     public static Set<Object> getIds(PatternEnum patternEnum) {
         Map<Object, MethodObj> methodMap = SINGLE_CONTEXT.get(patternEnum.getModel());
         return Objects.isNull(methodMap) ? null : methodMap.keySet();
