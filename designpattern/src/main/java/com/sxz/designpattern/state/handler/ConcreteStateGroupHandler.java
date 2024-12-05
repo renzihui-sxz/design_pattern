@@ -14,6 +14,14 @@ public class ConcreteStateGroupHandler implements StateGroupHandler {
 
     private String maxId;
 
+    public void setMinId(String minId) {
+        this.minId = minId;
+    }
+
+    public void setMaxId(String maxId) {
+        this.maxId = maxId;
+    }
+
     @Override
     public StateHandler get(String stateId) {
         return context.get(stateId);
@@ -31,13 +39,5 @@ public class ConcreteStateGroupHandler implements StateGroupHandler {
 
     public void put(String stateId, StateHandler stateHandler) {
         context.put(stateId, stateHandler);
-    }
-
-    public void setMinId(String minId) {
-        this.minId = minId;
-    }
-
-    public void setMaxId(String maxId) {
-        this.maxId = maxId;
     }
 }

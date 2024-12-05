@@ -9,7 +9,7 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class DefaultStrategyHandler<X, Y> implements StrategyHandler<X, Y> {
 
-    private MethodObj methodObj;
+    private final MethodObj methodObj;
 
     public DefaultStrategyHandler(MethodObj methodObj) {
         methodObj.getMethod().setAccessible(true);

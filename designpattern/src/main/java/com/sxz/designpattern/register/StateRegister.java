@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
  */
 public class StateRegister {
 
-    public static void initStateHandler(String packageName) throws IOException, ClassNotFoundException {
-        List<MethodObj> methods = ReflectUtil.getMethodByAnnotation(State.class, packageName);
+    public static void initStateHandler() throws IOException, ClassNotFoundException {
+        List<MethodObj> methods = ReflectUtil.getMethodByAnnotation(State.class);
         if (methods.isEmpty()) {
             return;
         }

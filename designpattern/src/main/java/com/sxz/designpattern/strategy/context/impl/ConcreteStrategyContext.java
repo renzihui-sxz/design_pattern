@@ -23,9 +23,12 @@ public class ConcreteStrategyContext<X, Y> implements StrategyContext<X, Y> {
 
     private static final Map<String, StrategyHandler<?, ?>> CONTEXT = new ConcurrentHashMap<>();
 
-    public ConcreteStrategyContext(String packageName){
+    public ConcreteStrategyContext() {
+    }
+
+    static {
         try {
-            StrategyRegister.initStrategyHandler(packageName);
+            StrategyRegister.initStrategyHandler();
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

@@ -1,6 +1,7 @@
 package com.sxz.designpattern.util;
 
 import com.sxz.designpattern.context.MethodObj;
+import com.sxz.designpattern.context.PackageContext;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,10 +12,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author suxz
@@ -29,14 +27,15 @@ public class ReflectUtil {
 
     private static final String FILE_INDEX = "file";
 
-    public static List<Class<?>> getClassByAnnotation(Class<? extends Annotation> annotationClass, String packageName) throws IOException, ClassNotFoundException {
+    public static List<Class<?>> getClassByAnnotation(Class<? extends Annotation> annotationClass) throws IOException, ClassNotFoundException {
+        String packageName = PackageContext.getSettingPackage();
         if (Objects.nonNull(packageName) && !packageName.isEmpty()) {
             return getClassFromPackage(annotationClass, packageName);
         }
         List<Class<?>> classesResp = new ArrayList<>();
-        Package[] packages = Package.getPackages();
-        for (Package pkg : packages) {
-            Class<?>[] classes = getClassesInPackage(pkg.getName());
+        Set<String> packages = PackageContext.getDefaultPackages();
+        for (String pkg : packages) {
+            Class<?>[] classes = getClassesInPackage(pkg);
             for (Class<?> clazz : classes) {
                 if (clazz.isAnnotationPresent(annotationClass)) {
                     classesResp.add(clazz);
@@ -70,14 +69,15 @@ public class ReflectUtil {
         return methodResp;
     }
 
-    public static List<MethodObj> getMethodByAnnotation(Class<? extends Annotation> annotationClass, String packageName) throws IOException, ClassNotFoundException {
+    public static List<MethodObj> getMethodByAnnotation(Class<? extends Annotation> annotationClass) throws IOException, ClassNotFoundException {
+        String packageName = PackageContext.getSettingPackage();
         if (Objects.nonNull(packageName) && !packageName.isEmpty()) {
             return getMethodObjFromPackage(annotationClass, packageName);
         }
         List<MethodObj> methodResp = new ArrayList<>();
-        Package[] packages = Package.getPackages();
-        for (Package pkg : packages) {
-            Class<?>[] classes = getClassesInPackage(pkg.getName());
+        Set<String> packages = PackageContext.getDefaultPackages();
+        for (String pkg : packages) {
+            Class<?>[] classes = getClassesInPackage(pkg);
             for (Class<?> clazz : classes) {
                 for (Method method : clazz.getDeclaredMethods()) {
                     if (method.isAnnotationPresent(annotationClass)) {

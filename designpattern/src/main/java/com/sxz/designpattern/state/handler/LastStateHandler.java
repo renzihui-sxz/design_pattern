@@ -8,6 +8,6 @@ public interface LastStateHandler extends CurrentStateHandler{
     /**
      * The previous state handler executes.
      */
-    void previous();
+    StateHandler previous();
 
 }

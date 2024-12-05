@@ -19,13 +19,13 @@ import java.util.Set;
  */
 public class StrategyRegister {
 
-    public static void initStrategyHandler(String packageName) throws IOException, ClassNotFoundException {
-        List<Class<?>> classes = ReflectUtil.getClassByAnnotation(Strategy.class, packageName);
+    public static void initStrategyHandler() throws IOException, ClassNotFoundException {
+        List<Class<?>> classes = ReflectUtil.getClassByAnnotation(Strategy.class);
         for (Class<?> aClass : classes) {
             String id = getStrategyId(aClass);
             ClassContext.put(PatternEnum.STRATEGY, id, aClass);
         }
-        List<MethodObj> methods = ReflectUtil.getMethodByAnnotation(Strategy.class, packageName);
+        List<MethodObj> methods = ReflectUtil.getMethodByAnnotation(Strategy.class);
         for (MethodObj method : methods) {
             String id = getStrategyId(method.getMethod());
             MethodContext.put(PatternEnum.STRATEGY, id, method);
@@ -35,9 +35,6 @@ public class StrategyRegister {
     private static String getStrategyId(Method method) {
         Strategy strategy = method.getAnnotation(Strategy.class);
         String id = strategy.id();
-        if (Objects.isNull(id)) {
-            throw new RuntimeException("The policy actuator id cannot be empty.");
-        }
         Set<Object> ids = getAllIds();
         if (ids.contains(id)) {
             throw new RuntimeException("The policy actuator id must be unique.");
@@ -61,9 +58,6 @@ public class StrategyRegister {
     private static String getStrategyId(Class<?> aClass) {
         Strategy strategy = aClass.getAnnotation(Strategy.class);
         String id = strategy.id();
-        if (Objects.isNull(id)) {
-            throw new RuntimeException("The policy actuator id cannot be empty.");
-        }
         Set<Object> ids = getAllIds();
         if (ids.contains(id)) {
             throw new RuntimeException("The policy actuator id must be unique.");

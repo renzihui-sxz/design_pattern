@@ -14,7 +14,7 @@ public interface StateContext {
     StateGroupHandler buildGroup(String groupId);
 
     /**
-     * 根据状态id构建状态处理器。
+     * Build a status processor based on the status id.
      */
     StateHandler buildState(String stateId);
 }

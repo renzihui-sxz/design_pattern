@@ -8,6 +8,6 @@ public interface CurrentStateHandler {
     /**
      * Current status processor execution.
      */
-    void current();
+    StateHandler handle();
 
 }

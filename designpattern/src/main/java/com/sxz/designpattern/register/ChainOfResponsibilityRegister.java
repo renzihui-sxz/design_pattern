@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
  */
 public class ChainOfResponsibilityRegister {
 
-    public static void initChainOfResponsibilityHandler(String packageName) throws IOException, ClassNotFoundException {
-        List<Class<?>> classes = ReflectUtil.getClassByAnnotation(ChainOrder.class, packageName);
+    public static void initChainOfResponsibilityHandler() throws IOException, ClassNotFoundException {
+        List<Class<?>> classes = ReflectUtil.getClassByAnnotation(ChainOrder.class);
         if (!classes.isEmpty()) {
             Map<String, List<Class<?>>> groupClass = groupingByIdOfClass(classes);
             groupClass.forEach((key, value) -> ClassContext.batchPut(PatternEnum.CHAIN_OF_RESPONSIBILITY, key, value));
         }
-        List<MethodObj> methods = ReflectUtil.getMethodByAnnotation(ChainOrder.class, packageName);
+        List<MethodObj> methods = ReflectUtil.getMethodByAnnotation(ChainOrder.class);
         if (!methods.isEmpty()) {
             Map<String, List<MethodObj>> groupMethod = groupingByIdOfMethod(methods);
             groupMethod.forEach((key, value) -> MethodContext.batchPut(PatternEnum.CHAIN_OF_RESPONSIBILITY, key, value));

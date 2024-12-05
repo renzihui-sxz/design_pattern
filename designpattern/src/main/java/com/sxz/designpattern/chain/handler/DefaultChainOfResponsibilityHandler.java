@@ -9,7 +9,7 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class DefaultChainOfResponsibilityHandler<T> implements ChainOfResponsibilityHandler<T> {
 
-    private MethodObj methodObj;
+    private final MethodObj methodObj;
 
     public DefaultChainOfResponsibilityHandler(MethodObj methodObj) {
         methodObj.getMethod().setAccessible(true);

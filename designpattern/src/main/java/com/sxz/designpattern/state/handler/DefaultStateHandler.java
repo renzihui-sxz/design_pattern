@@ -1,6 +1,8 @@
 package com.sxz.designpattern.state.handler;
 
+import com.sxz.designpattern.annotation.State;
 import com.sxz.designpattern.context.MethodObj;
+import com.sxz.designpattern.state.context.impl.ConcreteStateContext;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -9,55 +11,41 @@ import java.lang.reflect.InvocationTargetException;
  **/
 public class DefaultStateHandler implements StateHandler {
 
-    private DefaultStateHandler previousHandler;
-
-    private DefaultStateHandler nextHandler;
-
     private MethodObj methodObj;
 
-    public void setPreviousHandler(DefaultStateHandler previousHandler) {
-        this.previousHandler = previousHandler;
-    }
+    private String stateId;
 
-    public void setNextHandler(DefaultStateHandler nextHandler) {
-        this.nextHandler = nextHandler;
-    }
-
-    public void setMethodObj(MethodObj methodObj) {
+    public DefaultStateHandler(MethodObj methodObj) {
         methodObj.getMethod().setAccessible(true);
+        this.stateId = methodObj.getMethod().getAnnotation(State.class).id();
         this.methodObj = methodObj;
     }
 
-    public MethodObj getMethodObj() {
-        return methodObj;
-    }
-
     @Override
-    public void current() {
+    public StateHandler handle() {
         try {
             methodObj.getMethod().invoke(methodObj.getObj());
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
+        return this;
     }
 
     @Override
-    public void next() {
-        MethodObj nextMethodObj = this.nextHandler.getMethodObj();
-        try {
-            nextMethodObj.getMethod().invoke(nextMethodObj.getObj());
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
+    public StateHandler next() {
+        MethodObj nextMethod = ConcreteStateContext.getNextMethodObjStateId(this.stateId);
+        nextMethod.getMethod().setAccessible(true);
+        this.stateId = nextMethod.getMethod().getAnnotation(State.class).id();
+        this.methodObj = nextMethod;
+        return this;
     }
 
     @Override
-    public void previous() {
-        MethodObj previousMethodObj = this.previousHandler.getMethodObj();
-        try {
-            previousMethodObj.getMethod().invoke(previousMethodObj.getObj());
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
+    public StateHandler previous() {
+        MethodObj previousMethod = ConcreteStateContext.getPreviousMethodObjStateId(this.stateId);
+        previousMethod.getMethod().setAccessible(true);
+        this.stateId = previousMethod.getMethod().getAnnotation(State.class).id();
+        this.methodObj = previousMethod;
+        return this;
     }
 }
