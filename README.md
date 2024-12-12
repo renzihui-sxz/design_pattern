@@ -47,11 +47,6 @@ If you have such a piece of code, you can optimize it in the following ways.
 You can also write policies by implementing the StrategyHandler class.
 
 ```java
-package com.sxz.strategy;
-
-import com.sxz.designpattern.annotation.Strategy;
-import com.sxz.designpattern.strategy.handler.StrategyHandler;
-
 @Strategy(id = "1")
 public class StrategyTest implements StrategyHandler<String, String> {
     @Override
@@ -123,11 +118,6 @@ The execution order of the specified methods can be realized by means of annotat
 Of course can also be used by implementing ChainOfResponsibilityHandler class specific link code.
 
 ```java
-package com.sxz.chain;
-
-import com.sxz.designpattern.annotation.ChainOrder;
-import com.sxz.designpattern.chain.handler.ChainOfResponsibilityHandler;
-
 @ChainOrder(id = "001", order = 1)
 public class Chain implements ChainOfResponsibilityHandler<String> {
     @Override

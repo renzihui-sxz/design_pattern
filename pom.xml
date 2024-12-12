@@ -20,8 +20,27 @@
         <module>designpattern</module>
     </modules>
 
-    <groupId>com.sxz.designpattern</groupId>
+    <groupId>io.github.renzihui-sxz</groupId>
     <artifactId>design_pattern</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
+
+    <url>https://github.com/renzihui-sxz/design_pattern</url>
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+    <scm>
+        <connection>scm:git:https://github.com/renzihui-sxz/design_pattern.git</connection>
+        <developerConnection>scm:git:https://github.com/renzihui-sxz.git</developerConnection>
+        <url>https://github.com/renzihui-sxz/design_pattern</url>
+    </scm>
+    <developers>
+        <developer>
+            <name>renzihui-sxz</name>
+            <email>suxiangzhi96@163.com</email>
+        </developer>
+    </developers>
 </project>
