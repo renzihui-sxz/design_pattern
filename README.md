@@ -1,5 +1,21 @@
 # Use
 
+- maven
+
+```xml
+<dependency>
+    <groupId>io.github.renzihui-sxz</groupId>
+    <artifactId>designpattern</artifactId>
+    <version>1.0.0</version>
+</dependency>
+
+<dependency>
+    <groupId>io.github.renzihui-sxz</groupId>
+    <artifactId>designpattern-spring-boot-starter</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
 ## Strategy pattern
 
 ```java
